@@ -1,0 +1,12 @@
+{
+    "version":"1.1",
+    "method":"CoExpression.view_heatmap",
+    "context": null,
+    "params":[
+            {
+              "workspace_name": "CoExpression_test_$user_id",
+              "out_figure_object_name": "WGCNA_output_Feb16_2_hm",
+              "object_name": "GSE71046_maizeRNAseq_top500"
+            }
+    ]
+}

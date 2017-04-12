@@ -14,6 +14,7 @@ from ConfigParser import ConfigParser
 import re
 from collections import OrderedDict
 import uuid
+from string import Template
 
 # 3rd party imports
 import requests
@@ -25,7 +26,7 @@ import biokbase.workspace.client
 from biokbase.CoExpression.authclient import KBaseAuth as _KBaseAuth
 import biokbase.Transform.script_utils as script_utils 
 
-def error_report(err_msg, expr, workspace_service_url, param, provenance, ws):
+def error_report(err_msg, expr, workspace_service_url, workspace_name, provenance, ws):
 
     ## Create report object:
     report = "Failed : {0}".format(err_msg)
@@ -37,7 +38,7 @@ def error_report(err_msg, expr, workspace_service_url, param, provenance, ws):
     # generate a unique name for the Method report
     reportName = 'ErrorReport_'+str(hex(uuid.getnode()))
     report_info = ws.save_objects({
-                                    'workspace':param['workspace_name'],
+                                    'workspace':workspace_name,
                                     'objects':[
                                     {
                                     'type':'KBaseReport.Report',
@@ -68,10 +69,6 @@ class CoExpression:
  The modules supports retrieval of the following information:
  1. Identify differentially expressed genes
  2. WGCNA clustering
-
- The module expects to utlize a workspace with name args['workspace_name']+user_id for its
- input and output operations, where args contains the object meta data parameters. This is to ensure
- that all data is read and written from a workspace that is local to the user of the module.
     '''
 
     ######## WARNING FOR GEVENT USERS #######
@@ -202,12 +199,13 @@ class CoExpression:
 
         auth_client = _KBaseAuth(self.__AUTH_SERVICE_URL)
         user_id = auth_client.get_user(token)
-        full_workspace_name = param['workspace_name']+user_id
+        workspace_name_t = Template(param['workspace_name'])
+        workspace_name = workspace_name_t.substitute(user_id=user_id)
  
  
         from biokbase.workspace.client import Workspace
         ws = Workspace(url=self.__WS_URL, token=token)
-        expr = ws.get_objects([{'workspace': full_workspace_name, 'name' : param['object_name']}])[0]['data']
+        expr = ws.get_objects([{'workspace': workspace_name, 'name' : param['object_name']}])[0]['data']
  
  
         self._dumpExp2File(expr, self.RAWEXPR_DIR, self.EXPRESS_FN)
@@ -260,14 +258,14 @@ class CoExpression:
  
  
         fig_properties = {"xlabel" : "-log2(p-value)", "ylabel" : "Number of features", "xlog_mode" : "-log2", "ylog_mode" : "none", "title" : "Histogram of P-values", "plot_type" : "histogram"}
-        sstatus = ws.save_objects({'workspace' : full_workspace_name, 'objects' : [{'type' : 'MAK.FloatDataTable',
+        sstatus = ws.save_objects({'workspace' : workspace_name, 'objects' : [{'type' : 'MAK.FloatDataTable',
                                                                               'data' : pvfdt,
                                                                               'name' : data_obj_name}]})
 
         data_ref = "{0}/{1}/{2}".format(sstatus[0][6], sstatus[0][0], sstatus[0][4])
         fig_properties['data_ref'] = data_ref
 
-        sstatus = ws.save_objects({'workspace' : full_workspace_name, 'objects' : [{'type' : 'CoExpression.FigureProperties',
+        sstatus = ws.save_objects({'workspace' : workspace_name, 'objects' : [{'type' : 'CoExpression.FigureProperties',
                                                                               'data' : fig_properties,
                                                                               'name' : (param['out_figure_object_name'])}]})
         result = fig_properties
@@ -311,16 +309,17 @@ class CoExpression:
 
         auth_client = _KBaseAuth(self.__AUTH_SERVICE_URL)
         user_id = auth_client.get_user(token)
-        full_workspace_name = param['workspace_name']+user_id
+        workspace_name_t = Template(param['workspace_name'])
+        workspace_name = workspace_name_t.substitute(user_id=user_id)
  
         provenance = [{}]
         if 'provenance' in ctx:
                 provenance = ctx['provenance']
-        provenance[0]['input_ws_objects']=[full_workspace_name+'/'+param['object_name']]
+        provenance[0]['input_ws_objects']=[workspace_name+'/'+param['object_name']]
  
         from biokbase.workspace.client import Workspace
         ws = Workspace(url=self.__WS_URL, token=token)
-        expr = ws.get_objects([{'workspace': full_workspace_name, 'name' : param['object_name']}])[0]['data']
+        expr = ws.get_objects([{'workspace': workspace_name, 'name' : param['object_name']}])[0]['data']
  
         self._dumpExp2File(expr, self.RAWEXPR_DIR, self.EXPRESS_FN)
  
@@ -354,7 +353,7 @@ class CoExpression:
  
         if 'p_value' not in param and 'num_features' not in param:
           self.logger.error("One of p_value or num_features must be defined");
-          return error_report("One of p_value or num_features must be defined", expr,self.__WS_URL, param, provenance, ws)
+          return error_report("One of p_value or num_features must be defined", expr,self.__WS_URL, workspace_name, provenance, ws)
           #sys.exit(2) #TODO: No error handling in narrative so we do graceful termination
  
         #if 'p_value' in param and 'num_features' in param:
@@ -377,7 +376,7 @@ class CoExpression:
  
         if(len(gl) < 1) :
           self.logger.error("No genes are selected")
-          return error_report("Increase p_value or specify num_features", expr,self.__WS_URL, param, provenance, ws)
+          return error_report("Increase p_value or specify num_features", expr,self.__WS_URL, workspace_name, provenance, ws)
           #sys.exit(4)
  
         ## Upload FVE
@@ -387,7 +386,7 @@ class CoExpression:
  
         expr = self._subselectExp(expr, gl)
  
-        ex_info = ws.save_objects({'workspace' : full_workspace_name, 'objects' : [{'type' : 'KBaseFeatureValues.ExpressionMatrix',
+        ex_info = ws.save_objects({'workspace' : workspace_name, 'objects' : [{'type' : 'KBaseFeatureValues.ExpressionMatrix',
                                                                               'data' : expr,
                                                                               'name' : (param['out_expr_object_name'])}]})[0]
  
@@ -395,7 +394,7 @@ class CoExpression:
         fs ={'elements': {}}
         fs['description'] = "FeatureSet identified by filtering method '{0}' ".format(param['method'])
  
-        fs['description'] += "from {0}/{1}".format(full_workspace_name, param['object_name'])
+        fs['description'] += "from {0}/{1}".format(workspace_name, param['object_name'])
  
         for g in gl:
           if 'genome_ref' in expr:
@@ -403,7 +402,7 @@ class CoExpression:
           else:
             fs['elements'][g] = []
  
-        fs_info = ws.save_objects({'workspace' : full_workspace_name, 'objects' : [{'type' : 'KBaseCollections.FeatureSet',
+        fs_info = ws.save_objects({'workspace' : workspace_name, 'objects' : [{'type' : 'KBaseCollections.FeatureSet',
                                                                               'data' : fs,
                                                                               'name' : (param['out_fs_object_name'])}]})[0]
 
@@ -440,7 +439,7 @@ class CoExpression:
 
 
 
-        #result = {'workspace_name' : full_workspace_name, 'out_expr_object_name' : param['out_expr_object_name'], 'out_fs_object_name' : param['out_fs_object_name']}
+        #result = {'workspace_name' : workspace_name, 'out_expr_object_name' : param['out_expr_object_name'], 'out_fs_object_name' : param['out_fs_object_name']}
         #END filter_genes
 
         # At some point might do deeper type checking...
@@ -478,16 +477,17 @@ class CoExpression:
 
         auth_client = _KBaseAuth(self.__AUTH_SERVICE_URL)
         user_id = auth_client.get_user(token)
-        full_workspace_name = param['workspace_name'] + user_id
+        workspace_name_t = Template(param['workspace_name'])
+        workspace_name = workspace_name_t.substitute(user_id=user_id)
 
         provenance = [{}]
         if 'provenance' in ctx:
                 provenance = ctx['provenance']
-        provenance[0]['input_ws_objects']=[full_workspace_name+'/'+param['object_name']]
+        provenance[0]['input_ws_objects']=[workspace_name+'/'+param['object_name']]
  
         from biokbase.workspace.client import Workspace
         ws = Workspace(url=self.__WS_URL, token=token)
-        expr = ws.get_objects([{'workspace': full_workspace_name, 'name' : param['object_name']}])[0]['data']
+        expr = ws.get_objects([{'workspace': workspace_name, 'name' : param['object_name']}])[0]['data']
  
  
         eenv = os.environ.copy()
@@ -561,7 +561,7 @@ class CoExpression:
  
         if(len(cid2genelist) < 1) :
           self.logger.error("Clustering failed")
-          return error_report("Error: No cluster output", expr,self.__WS_URL, param, provenance, ws)
+          return error_report("Error: No cluster output", expr,self.__WS_URL, workspace_name, provenance, ws)
           #sys.exit(4)
  
         self.logger.info("Uploading the results onto WS")
@@ -570,10 +570,10 @@ class CoExpression:
             feature_clusters.append( {"meancor": float(cid2stat[cluster][0]), "msec": float(cid2stat[cluster][0]), "id_to_pos" : { gene : pos_index[gene] for gene in cid2genelist[cluster]}})
 
         ## Upload Clusters
-        feature_clusters ={"original_data": "{0}/{1}".format(full_workspace_name,param['object_name']),
+        feature_clusters ={"original_data": "{0}/{1}".format(workspace_name,param['object_name']),
                            "feature_clusters": feature_clusters}
  
-        cl_info = ws.save_objects({'workspace' : full_workspace_name, 'objects' : [{'type' : 'KBaseFeatureValues.FeatureClusters',
+        cl_info = ws.save_objects({'workspace' : workspace_name, 'objects' : [{'type' : 'KBaseFeatureValues.FeatureClusters',
                                                                           'data' : feature_clusters,
                                                                           'name' : (param['out_object_name'])}]})[0]
         ## Create report object:
@@ -603,8 +603,8 @@ class CoExpression:
                                         })[0]
 
         #result = { "report_name" : reportName,"report_ref" : "{0}/{1}/{2}".format(report_info[6],report_info[0],report_info[4]) }
-        #result = {'workspace_name' : full_workspace_name, 'out_object_name' : param['out_object_name']}
-        result = {'workspace' : full_workspace_name, 'output' : param['out_object_name']}
+        #result = {'workspace_name' : workspace_name, 'out_object_name' : param['out_object_name']}
+        result = {'workspace' : workspace_name, 'output' : param['out_object_name']}
         #END const_coex_net_clust
 
         # At some point might do deeper type checking...
@@ -645,12 +645,13 @@ class CoExpression:
 
         auth_client = _KBaseAuth(self.__AUTH_SERVICE_URL)
         user_id = auth_client.get_user(token)
-        full_workspace_name = param['workspace_name']+user_id
+        workspace_name_t = Template(param['workspace_name'])
+        workspace_name = workspace_name_t.substitute(user_id=user_id)
  
  
         from biokbase.workspace.client import Workspace
         ws = Workspace(url=self.__WS_URL, token=token)
-        fc = ws.get_objects([{'workspace': full_workspace_name, 'name' : param['object_name']}])[0]['data']
+        fc = ws.get_objects([{'workspace': workspace_name, 'name' : param['object_name']}])[0]['data']
         if 'original_data' not in fc:
             raise Exception("FeatureCluster object does not have information for the original ExpressionMatrix")
         oexpr = ws.get_objects([{ 'ref' : fc['original_data']}])[0]
@@ -878,7 +879,7 @@ class CoExpression:
         fdt['id'] = "{0}.fdt".format(param['out_figure_object_name'])
  
         self.logger.info("Saving the results")
-        sstatus = ws.save_objects({'workspace' : full_workspace_name, 'objects' : [{'type' : 'MAK.FloatDataTable',
+        sstatus = ws.save_objects({'workspace' : workspace_name, 'objects' : [{'type' : 'MAK.FloatDataTable',
                                                                               'data' : fdt,
                                                                               'hidden':1, 
                                                                               'name' : "{0}.fdt".format(param['out_figure_object_name'])}]})
@@ -886,7 +887,7 @@ class CoExpression:
         data_ref = "{0}/{1}/{2}".format(sstatus[0][6], sstatus[0][0], sstatus[0][4])
         fig_properties['data_ref'] = data_ref
 
-        sstatus = ws.save_objects({'workspace' : full_workspace_name, 'objects' : [{'type' : 'CoExpression.FigureProperties',
+        sstatus = ws.save_objects({'workspace' : workspace_name, 'objects' : [{'type' : 'CoExpression.FigureProperties',
                                                                               'data' : fig_properties,
                                                                               #'hidden':1, 
                                                                               'name' : "{0}".format(param['out_figure_object_name'])}]})
@@ -894,7 +895,7 @@ class CoExpression:
 
         #mchp = {}
         #mchp['figure_obj'] = "{0}/{1}/{2}".format(sstatus[0][6], sstatus[0][0], sstatus[0][4])
-        #sstatus = ws.save_objects({'workspace' : full_workspace_name, 'objects' : [{'type' : 'CoExpression.MulticlusterHeatmapPlot',
+        #sstatus = ws.save_objects({'workspace' : workspace_name, 'objects' : [{'type' : 'CoExpression.MulticlusterHeatmapPlot',
         #                                                                      'data' : mchp,
         #                                                                      'name' : (param['out_figure_object_name'])}]})
 

@@ -4,7 +4,7 @@
     "context": null,
     "params":[     
             {
-              "workspace_name": "CoExpression_test_",
+              "workspace_name": "CoExpression_test_$user_id",
               "object_name": "E_coli_v4_Build_6_impute_1",
               "method": "anova",
               "num_features": 100,

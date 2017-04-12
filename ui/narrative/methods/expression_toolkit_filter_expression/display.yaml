@@ -3,7 +3,7 @@
 #
 name     : Filter Expression Matrix
 tooltip  : |
-    Filter differentially expressed genes from an expression matrix using either log odds ratio or ANalysis Of VAriance (ANOVA) algorithms.
+    Filter an expression matrix using either Log Odds Ratio (LOR) or ANalysis of VAriance (ANOVA) algorithms.
 
 screenshots :
     []
@@ -33,7 +33,7 @@ parameters :
         ui-name : |
             Expression Matrix
         short-hint : |
-            Input expression matrix 
+            Select the Expression Matrix
         long-hint  : |
             Choose an Expression Matrix from your Data Panel to use with this method. You can upload an Expression Matrix into your Narrative by clicking the <i>Add Data</i> button and selecting the <i>Import</i> tab. Please run the method Associate Expression Matrix to Genome Features before running this method. 
     filtered_expression:

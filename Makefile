@@ -105,6 +105,8 @@ test-impl: create-test-wrapper
 	./$(TEST_DIR)/script_test/run_tests.sh
 	coverage report -m
 	cp .coverage work/
+	mkdir -p work/kb/deployment/lib
+	cp -R /kb/deployment/lib/biokbase work/kb/deployment/lib
 
 create-test-wrapper:
 	@echo "Creating test script wrapper"

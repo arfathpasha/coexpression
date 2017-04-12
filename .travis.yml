@@ -19,9 +19,11 @@ notifications:
 env:
   global:
     # TEST_USER
-    - secure: "Yj5naQWntR9Mjc41USqNepyicl/e2/ARKBowdaVfF/pZ+rMrhOk0IgeH+cpqhrUdnDlAG7GHsOfvqP4eYGId3xJHT/YQQm2Ss+9OOaNq4/obufzxmxuMlLXzWjsQCOUw+TIK0Tvi+PELeqTkqg6HBiWJX/eUYVNjyp8lG16wGmAIwHlfqXdzyD7RXX87hlzNff4kIybcdG9qJctrrFbJfENOW1NocktUn6Pv095v4R41Nw/xR//F42eu9gv+LTkRUw0CBs2ih3DEjgAeUQN0fYV/pgsIxCe3LWK6cJH7J0D/Vge1ZknTdVynD9t2freyM4/Qa61Hi47s9zSTOPDg2NeJRbmgaGCQcwiN47ahsbdWuxpkU4tok/yWKAdiQckkRg+P0vUGrj/C/eu1mW6EwY/52WqW+afW48wAKzuUuRH0jKJtYaQtfagIdhH++0GxEAn5bscnk/8V/IKytKWLkC0KQDsbx54wkPoxXu87iSXlOw6JYQsbgEL2SU/HqZCv/R+pOePu/z9Bzcged0geykK7NvCrgCccsmFeCHpNpIaR5qXmLTabIsjdQIGhGPK4RMCFs1DFYxjGKX3BTEVcsrDK1RSHyFKFY5AlkeZI+2jfR0y0mTwf+6ckKnGaENUuC7HL2G+JRJIiDD5gSMUZ/fciaBXix3F4I8skMt+iF/4="
+    #- secure: "Yj5naQWntR9Mjc41USqNepyicl/e2/ARKBowdaVfF/pZ+rMrhOk0IgeH+cpqhrUdnDlAG7GHsOfvqP4eYGId3xJHT/YQQm2Ss+9OOaNq4/obufzxmxuMlLXzWjsQCOUw+TIK0Tvi+PELeqTkqg6HBiWJX/eUYVNjyp8lG16wGmAIwHlfqXdzyD7RXX87hlzNff4kIybcdG9qJctrrFbJfENOW1NocktUn6Pv095v4R41Nw/xR//F42eu9gv+LTkRUw0CBs2ih3DEjgAeUQN0fYV/pgsIxCe3LWK6cJH7J0D/Vge1ZknTdVynD9t2freyM4/Qa61Hi47s9zSTOPDg2NeJRbmgaGCQcwiN47ahsbdWuxpkU4tok/yWKAdiQckkRg+P0vUGrj/C/eu1mW6EwY/52WqW+afW48wAKzuUuRH0jKJtYaQtfagIdhH++0GxEAn5bscnk/8V/IKytKWLkC0KQDsbx54wkPoxXu87iSXlOw6JYQsbgEL2SU/HqZCv/R+pOePu/z9Bzcged0geykK7NvCrgCccsmFeCHpNpIaR5qXmLTabIsjdQIGhGPK4RMCFs1DFYxjGKX3BTEVcsrDK1RSHyFKFY5AlkeZI+2jfR0y0mTwf+6ckKnGaENUuC7HL2G+JRJIiDD5gSMUZ/fciaBXix3F4I8skMt+iF/4="
     # TEST_PASSWORD
-    - secure: "V8TuLmNg7n/fzdOkv3hcd/TFzexKRmrjBmFmlMqSXXbG3A1BlkIJOdhDLWjxKiWVGLOENXkiBd9CPOEKwZnJAfoOm3hdpZ3tTrsGqL/0DTCgwmP8Uj1RZ8zt5hYu4IfTnJHLJmNEzwfZ29eC1ONhsSXp9ATbG7lyI2BqFchwnOFGcg03CJ5fl+CJAucrJta/uHNaRXRpnf33DG3M105X/V7WdzNDIfQBCLgx+ZyuvQo0AxZpDy9+iRFqt0cNfhAsYKnsLFJ+VSv+4Fzj+a+uGnXLz/jLFJCSt3Z9CuOuuiepCjkFAgMuJ6W58C6M/0t8/ixPeeVKs7acIKnaTKJ7B8MPM/O1Y3GMdpS+elwLWV1Z9Ku3V3suSMcYv+PeErN78+vGVR/iH/zw8mue+1yxQvBPMjl/zVmgHgG3YOevHKu/RUNLLVMt+/jrHGe2+HqHIIdejO1dwOWDDfstsVRGbpFU8VXQplM7+3iSe6q7aY07ZsRgDzk2SHI2cCg0Th5lUp8ri2oeMaAuFJSD2nWpT0bvull1jNoYRK4/h/3Pam2Hw64CQr2wIMhLBAfeVcvhLaNaVi8wCWxTHyHJ0cDpTd307mqnsuU+HIfmVzatYpXM7RXJXvYcAxfmRnKh9xOsNRyetyFbfmuzLTEedMYMT5Q6J7v5DORDzpU5F8kklA0="
+    #- secure: "V8TuLmNg7n/fzdOkv3hcd/TFzexKRmrjBmFmlMqSXXbG3A1BlkIJOdhDLWjxKiWVGLOENXkiBd9CPOEKwZnJAfoOm3hdpZ3tTrsGqL/0DTCgwmP8Uj1RZ8zt5hYu4IfTnJHLJmNEzwfZ29eC1ONhsSXp9ATbG7lyI2BqFchwnOFGcg03CJ5fl+CJAucrJta/uHNaRXRpnf33DG3M105X/V7WdzNDIfQBCLgx+ZyuvQo0AxZpDy9+iRFqt0cNfhAsYKnsLFJ+VSv+4Fzj+a+uGnXLz/jLFJCSt3Z9CuOuuiepCjkFAgMuJ6W58C6M/0t8/ixPeeVKs7acIKnaTKJ7B8MPM/O1Y3GMdpS+elwLWV1Z9Ku3V3suSMcYv+PeErN78+vGVR/iH/zw8mue+1yxQvBPMjl/zVmgHgG3YOevHKu/RUNLLVMt+/jrHGe2+HqHIIdejO1dwOWDDfstsVRGbpFU8VXQplM7+3iSe6q7aY07ZsRgDzk2SHI2cCg0Th5lUp8ri2oeMaAuFJSD2nWpT0bvull1jNoYRK4/h/3Pam2Hw64CQr2wIMhLBAfeVcvhLaNaVi8wCWxTHyHJ0cDpTd307mqnsuU+HIfmVzatYpXM7RXJXvYcAxfmRnKh9xOsNRyetyFbfmuzLTEedMYMT5Q6J7v5DORDzpU5F8kklA0="
+    # TEST_TOKEN
+    secure: "hTWjIg7lBvE7G6AXbeC0PoxS9LHpfK8NvDO2HxO87NzZUtHpHrzlx1riU9VA7VcPn/G5MEZ5evkzSN+iqfnrrI/UtwfGYtccp+oKDI5NdWsKX2tVLWCJILMsJFnP+HygKyxv/qQIqnkI4+1k+gJi80oxKrJSN6R1tGxAtfEv3ccK0MM6pvumu3k6srMnMRSCzwL4TTQ3jBMoW62aDpCqeJUq1rMSgC+EBuZ8zI92uUvpIoVDm+vwXN5MkSTI5QdeBBTTxGbX/ghA+tfwhm0ptq8D4xvGtsSf17ptafCbhJ2VW+XsnRV+rcfCvIfM7zms3Nl/6lHBv4jnuVwGn8vB4l9NPrRdJtpBwD+Ss5AWT30h9fFDn+4s6bAc3HI4EvG1V9SmGef4HvwCrF8bDVvV9OLAww4J/gI//M8isQBHlQZyh2Sctda3+qMpIgCvvEmOR0zAwTShE7DK6ELMGrx6Wagv38xjlIesdhGpr8nXVJimdxB27VfcPpMoKzwDC+DQ4CIjGTed2TWgd2Gi+Y7BoaCgQBfERdGkvS713ipi3AGjbf3QKb/E9Xd96ZZdSj/dcJ1oolFByCeVO/9DIIcxUWoC85IvoAZTeO/bsm/B+8hAjQYBvs1OeJ4EG4VtKrkEPgJ0En0RnGxBgCveNPS/IarESYNupzi5i29l4iNTl8c="
 
 branches:
   only:
@@ -39,7 +41,7 @@ install:
     - pip install coveralls
     - pip install coverage
     - git clone https://github.com/kbase/jars
-    - git clone https://github.com/kbase/kb_sdk
+    - git clone https://github.com/kbase/kb_sdk -b auth2
     - cd kb_sdk
     - make
     - make sdkbase
@@ -47,21 +49,26 @@ install:
     - export PATH=$(pwd)/bin:$PATH
     - cd ../
     #IMPORTANT change clone to sjyoo and finally to kbase after pull requests
-    - git clone https://github.com/arfathpasha/coexpression
+    - git clone https://github.com/arfathpasha/coexpression -b develop
     - cd coexpression
     # run the kb-sdk test command once to build test_local dir and populate the .ignore files
     - kb-sdk test -s
     # add test config
-    - sed -i "s/test_user=/test_user=$TEST_USER/" test_local/test.cfg
-    - sed -i "s/test_password=/test_password=$TEST_PASSWORD/" test_local/test.cfg
+    #- sed -i "s/test_user=/test_user=$TEST_USER/" test_local/test.cfg
+    #- sed -i "s/test_password=/test_password=$TEST_PASSWORD/" test_local/test.cfg
+    - sed -i "s/test_token=/test_token=$TEST_TOKEN/" test_local/test.cfg
     - sed -i 's\https://appdev.kbase.us/services\https://ci.kbase.us/services\' test_local/test.cfg
+    - sed -i 's\https://appdev.kbase.us/services/auth/api/legacy/KBase/Sessions/Login\https://ci.kbase.us/services/auth/api/legacy/KBase/Sessions/Login\' test_local/test.cfg
     # temporary fix for host::container user mapping (until it is fixed in kb-sdk)
     - sed -i 's/$(id -u)/0:0/' test_local/run_tests.sh
 
 script:
-    - kb-sdk test -s
+    - kb-sdk test
 
 after_success:
     - cp test_local/workdir/.coverage .
+    - sudo mkdir -p /kb/deployment
+    - sudo cp -R test_local/workdir/kb/deployment/lib /kb/deployment
+    - ls -l /kb/deployment/lib/biokbase/
     - coverage report -m
     - coveralls

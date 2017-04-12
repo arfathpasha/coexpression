@@ -1,0 +1,13 @@
+{
+    "version":"1.1",
+    "method":"CoExpression.diff_p_distribution",
+    "context": null,
+    "params":[
+            {
+              "workspace_name": "CoExpression_test_$user_id",
+              "object_name": "Escherichia_coli_str_K-12_substr_MG1655_NCBI",
+              "method": "anova",
+              "out_figure_object_name": "coex_fig_obj"
+            }
+    ]
+}

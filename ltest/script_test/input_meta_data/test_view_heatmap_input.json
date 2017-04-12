@@ -4,7 +4,7 @@
     "context": null,
     "params":[     
             {
-              "workspace_name": "CoExpression_test_",
+              "workspace_name": "CoExpression_test_$user_id",
               "out_figure_object_name": "WGCNA_output_Feb16_2_hm",
               "control_condition": "",
               "quantile": 0.75,
