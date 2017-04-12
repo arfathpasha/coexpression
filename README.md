@@ -12,7 +12,8 @@ develop: [![Build Status](https://travis-ci.org/arfathpasha/coexpression.svg?bra
 Code coverage: (master branch)
 [![Coverage Status](https://coveralls.io/repos/github/arfathpasha/coexpression/badge.svg?branch=master)](https://coveralls.io/github/arfathpasha/coexpression?branch=master)</br>
 
-Notes:</br>
-The module expects to utilize a workspace with name args['workspace_name']+user_id for its input and output operations, where args contains the input object meta data parameters. This is to ensure that all data is read and written from a workspace that is local to the user of the module.
+## Notes for Developers:</br>
+In order to run tests, you must have a developer token that is to be placed in test_local/test.cfg. The developer token may be obtained from one of the kbase admins. 
 
-TODO: It is anticipated that in the future, `ltest/script_test/*_input.json` files will be converted to template files in order to make the workspace name along with its user_id suffix more explicit. 
+Each time a merge is made, the CoExpression clone line in .travis.yml needs to be updated to ensure that the right branch is cloned. 
+
